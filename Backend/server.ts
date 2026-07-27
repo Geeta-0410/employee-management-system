@@ -23,7 +23,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://employee-management-system-38r2.vercel.app",
   "https://employee-management-system-woad-alpha.vercel.app",
-  ...corsOrigins,
+  "https://employee-management-nkcosj1le-geeta-chahars-projects.vercel.app",
 ];
 
 app.use(

@@ -1,0 +1,53 @@
+{
+  "name": "project-ts",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.4.0",
+    "@tailwindcss/vite": "^4.3.0",
+    "@tanstack/react-query-devtools": "^5.101.2",
+    "axios": "^1.18.0",
+    "firebase": "^12.15.0",
+    "geolib": "^3.3.14",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^1.21.0",
+    "react": "^19.2.6",
+    "react-calendar": "^6.0.1",
+    "react-dom": "^19.2.6",
+    "react-hook-form": "^7.78.0",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.7.0",
+    "react-leaflet": "^5.0.0",
+    "react-router-dom": "^7.18.1",
+    "rechart": "^0.0.1",
+    "recharts": "^3.9.2",
+    "tailwind-scrollbar": "^4.0.2",
+    "tailwindcss": "^4.3.0",
+    "uuid": "^14.0.0",
+    "words-to-numbers": "^1.5.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/leaflet": "^1.9.21",
+    "@types/node": "^24.12.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.59.2",
+    "vite": "^8.0.12"
+  }
+}

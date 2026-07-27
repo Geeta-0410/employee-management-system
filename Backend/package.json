@@ -1,0 +1,53 @@
+{
+  "name": "employee-management-backend",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nodemon server.ts",
+    "seed": "ts-node ./seed/seedData.ts"
+  },
+  "keywords": [
+    "employee",
+    "management",
+    "backend"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2",
+    "firebase-admin": "^14.1.0",
+    "geolib": "^3.3.14",
+    "jsonwebtoken": "^9.0.3",
+    "leaflet": "^1.9.4",
+    "mongoose": "^8.24.0",
+    "multer": "^2.2.0",
+    "nodemailer": "^9.0.1",
+    "paseto": "^3.1.4",
+    "react-icons": "^5.6.0",
+    "react-leaflet": "^5.0.0",
+    "uuid": "^9.0.1",
+    "words-to-numbers": "^1.5.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/leaflet": "^1.9.21",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^25.9.4",
+    "@types/nodemailer": "^8.0.1",
+    "@types/uuid": "^10.0.0",
+    "install": "^0.13.0",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "typescriptnpm": "^1.0.1"
+  }
+}

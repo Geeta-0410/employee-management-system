@@ -17,7 +17,7 @@ console.log("EMAIL_PASS =", process.env.EMAIL_PASS);
 
 const app: Express = express();
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5175"];
+const allowedOrigins = ["https://employee-management-system-38r2.vercel.app"];
 
 const corsOptions = {
   origin: (

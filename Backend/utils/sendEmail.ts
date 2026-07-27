@@ -5,23 +5,17 @@ import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 465,
+  port: 587,
   secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  connectionTimeout: 30000,
+  greetingTimeout: 30000,
+  socketTimeout: 30000,
 });
 
-// Verify SMTP connection
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("SMTP VERIFY ERROR:");
-    console.error(error);
-  } else {
-    console.log("SMTP SERVER IS READY");
-  }
-});
 
 export const sendOTPEmail = async (email: string, otp: string) => {
   console.log("Sending OTP to:", email);

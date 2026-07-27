@@ -89,7 +89,7 @@ export default function Header({ onLogout }: HeaderProps) {
                           />
                         ) : user?.profileImage ? (
                           <img
-                            src={`import.meta.env.VITE_API_URL://${user.profileImage}`}
+                            src={`${import.meta.env.VITE_API_URL ?? ""}${user.profileImage}`}
                             className="h-full w-full object-cover"
                           />
                         ) : (

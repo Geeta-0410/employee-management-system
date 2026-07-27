@@ -15,12 +15,26 @@ dotenv.config();
 
 const app: Express = express();
 
+const corsOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(",").map((origin) => origin.trim())
+  : [];
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://employee-management-system-38r2.vercel.app",
+  "https://employee-management-system-woad-alpha.vercel.app",
+  ...corsOrigins,
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://employee-management-system-38r2.vercel.app",
-    ],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS origin denied: ${origin}`));
+      }
+    },
     credentials: true,
   }),
 );

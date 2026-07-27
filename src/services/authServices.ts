@@ -3,9 +3,16 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../firebase/firebase";
 import { signOut } from "firebase/auth";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const getApiUrl = (): string => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+  if (!apiUrl) {
+    console.error("VITE_API_URL is not defined. Set it in your deployment environment.");
+    throw new Error("Missing VITE_API_URL environment variable");
+  }
+  return apiUrl;
+};
 
-console.log("API_URL =", API_URL);
+const API_URL = getApiUrl();
 
 const getAuthHeader = () => ({
   headers: {

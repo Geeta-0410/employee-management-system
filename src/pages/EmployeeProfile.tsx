@@ -125,7 +125,7 @@ function EmployeeProfile() {
               <img
                 src={
                   profile.profileImage
-                    ? `import.meta.env.VITE_API_URL${profile.profileImage}`
+                    ? `${import.meta.env.VITE_API_URL ?? ""}${profile.profileImage}`
                     : "https://via.placeholder.com/150"
                 }
                 alt="profile"

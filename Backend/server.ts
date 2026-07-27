@@ -24,19 +24,24 @@ const allowedOrigins = [
   "https://employee-management-system-38r2.vercel.app",
   "https://employee-management-system-woad-alpha.vercel.app",
   "https://employee-management-nkcosj1le-geeta-chahars-projects.vercel.app",
+  "https://employee-management-33cw6t9n-geeta-chahars-projects.vercel.app",
 ];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (
+        !origin ||
+        origin.includes("vercel.app") ||
+        origin === "http://localhost:5173"
+      ) {
         callback(null, true);
       } else {
         callback(new Error(`CORS origin denied: ${origin}`));
       }
     },
     credentials: true,
-  }),
+  })
 );
 
 app.use(express.json());

@@ -12,31 +12,19 @@ import aiRoutes from "./routes/aiRoutes";
 
 dotenv.config();
 
-console.log("EMAIL_USER =", process.env.EMAIL_USER);
-console.log("EMAIL_PASS =", process.env.EMAIL_PASS);
 
 const app: Express = express();
 
-const allowedOrigins = ["https://employee-management-system-38r2.vercel.app"];
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://employee-management-system-38r2.vercel.app",
+    ],
+    credentials: true,
+  }),
+);
 
-const corsOptions = {
-  origin: (
-    origin: string | undefined,
-    callback: (err: Error | null, allow?: boolean) => void,
-  ) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error(`Origin ${origin} not allowed by CORS`));
-    }
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
 app.use(express.json());
 
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));

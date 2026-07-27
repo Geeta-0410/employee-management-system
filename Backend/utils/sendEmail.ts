@@ -6,7 +6,7 @@ import nodemailer from "nodemailer";
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
-  secure: true,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -16,23 +16,23 @@ const transporter = nodemailer.createTransport({
   socketTimeout: 30000,
 });
 
-
 export const sendOTPEmail = async (email: string, otp: string) => {
-  console.log("Sending OTP to:", email);
+  try {
+    console.log("Sending OTP...");
 
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: "Employee Management - Email Verification",
-    html: `
-      <h2>Email Verification</h2>
-      <h1>${otp}</h1>
-    `,
-  });
+    const info = await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Employee Management - Email Verification",
+      html: `<h2>Your OTP is ${otp}</h2>`,
+    });
 
-  console.log("Mail Sent Successfully");
+    console.log("Mail sent:", info.messageId);
+  } catch (err) {
+    console.error("SendMail Error:", err);
+    throw err;
+  }
 };
-
 export const sendEmployeeCredentialsEmail = async (
   email: string,
   employeeName: string,

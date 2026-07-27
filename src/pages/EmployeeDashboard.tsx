@@ -13,7 +13,7 @@ function EmployeeDashboard() {
   const [employee, setEmployee] = useState<any>(null);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [refreshChart, setRefreshChart] = useState(false);
+
   const [analyticsData, setAnalyticsData] = useState([]);
 
   useEffect(() => {
@@ -65,10 +65,7 @@ function EmployeeDashboard() {
   duration-300
 `}
         >
-          <WelcomeCard
-            employee={employee}
-            onAttendanceMarked={() => setRefreshChart((prev) => !prev)}
-          />
+          <WelcomeCard employee={employee} onAttendanceMarked={() => {}} />
 
           {/* Stat Cards */}
           <div className="my-8">

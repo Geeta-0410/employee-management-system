@@ -94,18 +94,6 @@ function EmployeeTasks() {
   const todoTasks = tasks.filter((task) => task.status === "To Do");
   const completedTasks = tasks.filter((task) => task.status === "Completed");
 
-  const priorityColor = (priority: string) => {
-    switch (priority) {
-      case "High":
-        return "bg-red-200 text-red-700";
-
-      case "Low":
-        return "bg-gray-200 text-gray-700";
-
-      default:
-        return "bg-blue-200 text-blue-700";
-    }
-  };
   const handleEdit = (task: Task) => {
     setEditingId(task._id || "");
 

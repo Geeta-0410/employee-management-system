@@ -16,16 +16,15 @@ interface EmployeeFormProps {
 
 function EmployeeForm({
   employees,
-  setEmployees,
   fetchEmployees,
   editingEmployee,
   setEditingEmployee,
-}: EmployeeFormProps) {
+}: EmployeeFormProps){
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting, isValid },
+    formState: { errors, isSubmitting},
   } = useForm({
     resolver: zodResolver(employeeSchema),
     mode: "onChange",

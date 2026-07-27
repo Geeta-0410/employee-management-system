@@ -7,13 +7,11 @@ interface HeaderProps {
 }
 
 export default function Header({ onLogout }: HeaderProps) {
-
   // ---------------- STATES ----------------
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [showProfile, setShowProfile] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const [uploading, setUploading] = useState(false);
 
   // ---------------- REFS ----------------
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -24,28 +22,6 @@ export default function Header({ onLogout }: HeaderProps) {
     const file = e.target.files?.[0];
     if (!file) return;
     setSelectedImage(file);
-  };
-
-  // ---------------- IMAGE UPLOAD ----------------
-  const handleImageUpload = async () => {
-    if (!selectedImage) return;
-
-    try {
-      setUploading(true);
-
-      const formData = new FormData();
-      formData.append("image", selectedImage);
-
-      const res = await uploadProfileImage(formData);
-
-      setUser(res.data.user);
-      setSelectedImage(null);
-
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setUploading(false);
-    }
   };
 
   useEffect(() => {
@@ -77,19 +53,19 @@ export default function Header({ onLogout }: HeaderProps) {
 
   return (
     <>
-
       <header className="bg-slate-700 border-b border-slate-200 shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
           <div className="h-9 w-9 rounded-lg bg-indigo-400 border border-indigo-400 flex items-center justify-center shadow-md">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5 text-white"
-    viewBox="0 0 24 24"
-    fill="currentColor">
-    {/* dashboard grid icon */}
-    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
-  </svg>
-</div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-white"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              {/* dashboard grid icon */}
+              <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
+            </svg>
+          </div>
           <h1 className="text-3xl font-semibold text-white tracking-wide">
             Employee Management System
           </h1>
@@ -97,7 +73,8 @@ export default function Header({ onLogout }: HeaderProps) {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setShowProfile(!showProfile)}
-                className="h-11 w-11 rounded-full bg-indigo-100 border border-indigo-200 flex items-center justify-center hover:bg-indigo-200 transition">
+                className="h-11 w-11 rounded-full bg-indigo-100 border border-indigo-200 flex items-center justify-center hover:bg-indigo-200 transition"
+              >
                 <FiUser className="text-indigo-600 text-xl" />
               </button>
               {showProfile && (
@@ -108,11 +85,13 @@ export default function Header({ onLogout }: HeaderProps) {
                         {selectedImage ? (
                           <img
                             src={URL.createObjectURL(selectedImage)}
-                            className="h-full w-full object-cover"/>
+                            className="h-full w-full object-cover"
+                          />
                         ) : user?.profileImage ? (
                           <img
                             src={`http://localhost:5000${user.profileImage}`}
-                            className="h-full w-full object-cover"/>
+                            className="h-full w-full object-cover"
+                          />
                         ) : (
                           <div className="h-full w-full bg-indigo-100 flex items-center justify-center">
                             <FiUser className="text-4xl text-indigo-600" />
@@ -132,7 +111,7 @@ export default function Header({ onLogout }: HeaderProps) {
                         ref={fileInputRef}
                         onChange={handleSelectImage}
                       />
-                    </div>             
+                    </div>
                     <h3 className="mt-4 text-lg font-bold text-slate-800">
                       {user?.name || "user"}
                     </h3>
@@ -155,7 +134,6 @@ export default function Header({ onLogout }: HeaderProps) {
 
                     <div className="w-full  my-2"></div>
 
-          
                     <button
                       onClick={() => setShowLogoutModal(true)}
                       className="w-full flex items-center justify-center gap-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl"
@@ -163,7 +141,6 @@ export default function Header({ onLogout }: HeaderProps) {
                       <FiLogOut />
                       Logout
                     </button>
-
                   </div>
                 </div>
               )}
@@ -176,16 +153,13 @@ export default function Header({ onLogout }: HeaderProps) {
               <FiLogOut />
               Logout
             </button>
-
           </div>
         </div>
       </header>
 
       {showLogoutModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-
           <div className="bg-white w-[90%] max-w-md rounded-2xl shadow-xl p-6">
-
             <h2 className="text-xl font-semibold text-slate-800">
               Are you sure you want to logout?
             </h2>
@@ -195,7 +169,6 @@ export default function Header({ onLogout }: HeaderProps) {
             </p>
 
             <div className="flex justify-end gap-3 mt-6">
-
               <button
                 onClick={() => setShowLogoutModal(false)}
                 className="px-4 py-2 rounded-xl bg-slate-200"
@@ -212,9 +185,7 @@ export default function Header({ onLogout }: HeaderProps) {
               >
                 Yes Logout
               </button>
-
             </div>
-
           </div>
         </div>
       )}

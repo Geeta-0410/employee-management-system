@@ -44,3 +44,5 @@ Thumbs.db
 
 # Uploads (optional)
 uploads/*
+Backend/config/firebase-service-account.json
+Backend/uploads/*

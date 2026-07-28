@@ -74,17 +74,19 @@ export const createEmployee = async (
     });
     await employee.save();
 
-    try {
-      await sendEmployeeCredentialsEmail(email, name, tempPassword);
-    } catch (mailError) {
-      console.error("Failed To Send Credentials Email:", mailError);
-    }
+    sendEmployeeCredentialsEmail(email, name, tempPassword)
+      .then((mailSent) => {
+        if (!mailSent) {
+          console.warn("Credentials email not delivered to", email);
+        }
+      })
+      .catch((mailError) => {
+        console.error("Failed To Send Credentials Email:", mailError);
+      });
 
     res.status(201).json({
       message: "Employee created successfully",
-
       employee,
-
       credentials: {
         email,
         employeeId,

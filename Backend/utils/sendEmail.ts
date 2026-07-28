@@ -7,16 +7,24 @@ const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
   secure: false,
-  auth: {
+  auth: process.env.EMAIL_USER && process.env.EMAIL_PASS ? {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
-  },
+  } : undefined,
   connectionTimeout: 30000,
   greetingTimeout: 30000,
   socketTimeout: 30000,
 });
 
 export const sendOTPEmail = async (email: string, otp: string) => {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    console.warn(
+      "EMAIL_USER or EMAIL_PASS is not set. Skipping OTP email delivery.",
+      { email, otp },
+    );
+    return;
+  }
+
   try {
     console.log("Sending OTP...");
 
@@ -30,7 +38,9 @@ export const sendOTPEmail = async (email: string, otp: string) => {
     console.log("Mail sent:", info.messageId);
   } catch (err) {
     console.error("SendMail Error:", err);
-    throw err;
+    console.warn(
+      "OTP email delivery failed, but signup will continue. Verify OTP manually or fix email config.",
+    );
   }
 };
 export const sendEmployeeCredentialsEmail = async (

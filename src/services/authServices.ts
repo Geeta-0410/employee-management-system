@@ -5,9 +5,22 @@ import { signOut } from "firebase/auth";
 
 const getApiUrl = (): string => {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const isLocalHost =
+    typeof window !== "undefined" &&
+    /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname);
+  const localFallback = "http://localhost:5000/api";
+
+  if (isLocalHost) {
+    return localFallback;
+  }
   if (!apiUrl) {
-    console.error("VITE_API_URL is not defined. Set it in your deployment environment.");
-    throw new Error("Missing VITE_API_URL environment variable");
+    const fallback = "http://localhost:5000/api";
+    console.warn(
+      "VITE_API_URL is not defined. Falling back to",
+      fallback,
+      "for local development.",
+    );
+    return fallback;
   }
   return apiUrl;
 };

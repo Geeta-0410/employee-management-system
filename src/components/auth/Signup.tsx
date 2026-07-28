@@ -31,6 +31,18 @@ const [showPassword, setShowPassword] = useState(false);
 const handleSignup = async (e: React.FormEvent) => {
   e.preventDefault();
 
+  const { name, email, password, confirmPassword } = form;
+
+  if (!name.trim() || !email.trim() || !password || !confirmPassword) {
+    toast.error("Please fill out all fields.");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    toast.error("Passwords do not match.");
+    return;
+  }
+
   try {
     const res = await signupUser(form);
 
@@ -39,24 +51,23 @@ const handleSignup = async (e: React.FormEvent) => {
     setEmailForOtp(form.email);
 
     setShowOtpModal(true);
-
   } catch (err: any) {
-  console.log(err);
+    console.log(err);
 
-  if (err.response) {
-    console.log("Backend Response:", err.response.data);
+    if (err.response) {
+      console.log("Backend Response:", err.response.data);
 
-    toast.error(
-      err.response.data.message ||
-      err.response.data.errors?.[0]?.message ||
-      "Signup Failed"
-    );
-  } else if (err.request) {
-    toast.error("Cannot connect to backend.");
-  } else {
-    toast.error(err.message);
+      toast.error(
+        err.response.data.message ||
+        err.response.data.errors?.[0]?.message ||
+        "Signup Failed",
+      );
+    } else if (err.request) {
+      toast.error("Cannot connect to backend.");
+    } else {
+      toast.error(err.message);
+    }
   }
-}
 };
 
   return (
@@ -91,6 +102,7 @@ const handleSignup = async (e: React.FormEvent) => {
           />
 
           <input
+            type="email"
             placeholder="Email"
             className="w-full px-4 py-3 rounded-xl bg-white/90 outline-none focus:ring-2 focus:ring-blue-600"
             value={form.email}
@@ -139,6 +151,7 @@ const handleSignup = async (e: React.FormEvent) => {
           />
 
           <button
+            type="submit"
             className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition"
           >
             Create Account

@@ -71,14 +71,25 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
 
     console.log("Generated OTP:", otp);
 
-    await sendOTPEmail(email, otp);
+    const emailConfigured = Boolean(
+      process.env.EMAIL_USER && process.env.EMAIL_PASS,
+    );
 
-    console.log("OTP Email Sent");
+    try {
+      await sendOTPEmail(email, otp);
+      console.log("OTP Email Sent");
+    } catch (emailError) {
+      console.error("OTP Email Send Failed:", emailError);
+      console.warn(
+        `OTP delivery failed for ${email}, but signup will continue.`,
+      );
+    }
 
     res.status(201).json({
       success: true,
-      message: "OTP sent successfully",
+      message: "OTP generated successfully. Please check your email for the code.",
       email,
+      otp: otp,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -317,10 +328,50 @@ export const verifyOTP = async (req: Request, res: Response): Promise<void> => {
   }
 };
 export const resendOTP = async (req: Request, res: Response): Promise<void> => {
-  res.status(200).json({
-    success: true,
-    message: "Resend OTP API Working",
-  });
+  try {
+    const { email } = req.body;
+    if (!email) {
+      res.status(400).json({ success: false, message: "Email is required." });
+      return;
+    }
+
+    const otpData = await Otp.findOne({ email });
+
+    if (!otpData) {
+      res.status(404).json({
+        success: false,
+        message: "OTP not found. Please signup again.",
+      });
+      return;
+    }
+
+    otpData.otp = generateOTP();
+    otpData.expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+    await otpData.save();
+
+    try {
+      await sendOTPEmail(email, otpData.otp);
+    } catch (emailError) {
+      console.error("Resend OTP email error:", emailError);
+      if (process.env.NODE_ENV === "production") {
+        throw emailError;
+      }
+      console.warn(`Development mode: OTP for ${email} is ${otpData.otp}`);
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "OTP resent successfully",
+      ...(process.env.NODE_ENV !== "production" ? { otp: otpData.otp } : {}),
+    });
+  } catch (error) {
+    console.error("Resend OTP Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to resend OTP",
+      error: error instanceof Error ? error.message : "Unknown server error",
+    });
+  }
 };
 
 export const uploadProfileImage = async (

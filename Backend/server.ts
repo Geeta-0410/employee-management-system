@@ -11,6 +11,7 @@ import taskRoutes from "./routes/taskRoutes";
 import aiRoutes from "./routes/aiRoutes";
 
 dotenv.config();
+console.log("NODE_ENV =", process.env.NODE_ENV);
 
 
 const app: Express = express();

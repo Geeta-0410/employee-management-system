@@ -13,6 +13,7 @@ export const createEmployee = async (
   req: Request & { user?: any },
   res: Response,
 ): Promise<void> => {
+  console.log("========== CREATE EMPLOYEE CONTROLLER CALLED ==========");
   try {
     const validationResult = employeeSchema.safeParse(req.body);
     if (!validationResult.success) {
@@ -73,26 +74,26 @@ export const createEmployee = async (
       isEmailVerified: false,
     });
     await employee.save();
+    console.log("==================================");
+console.log("Employee saved successfully");
+console.log("Sending email to:", email);
 
-    sendEmployeeCredentialsEmail(email, name, tempPassword)
-      .then((mailSent) => {
-        if (!mailSent) {
-          console.warn("Credentials email not delivered to", email);
-        }
-      })
-      .catch((mailError) => {
-        console.error("Failed To Send Credentials Email:", mailError);
-      });
+  const mailSent = await sendEmployeeCredentialsEmail(
+  email,
+  name,
+  tempPassword
+);
+console.log("After sendEmployeeCredentialsEmail");
 
-    res.status(201).json({
-      message: "Employee created successfully",
-      employee,
-      credentials: {
-        email,
-        employeeId,
-        temporaryPassword: tempPassword,
-      },
-    });
+console.log("Calling sendMail...");
+console.log("Mail Sent:", mailSent);
+
+
+res.status(201).json({
+  message: "Employee created successfully",
+  employee,
+  emailSent: mailSent
+});
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("Error creating employee:", error);

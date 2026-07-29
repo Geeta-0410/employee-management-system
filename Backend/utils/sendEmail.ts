@@ -1,66 +1,71 @@
 import dotenv from "dotenv";
-import nodemailer from "nodemailer";
+import axios from "axios";
 
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
+const BREVO_API_URL = "https://api.brevo.com/v3/smtp/email";
+const BREVO_API_KEY = process.env.BREVO_API_KEY;
+const SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL || process.env.EMAIL_USER;
+const SENDER_NAME = process.env.BREVO_SENDER_NAME || "Employee Management";
+
+console.log("Brevo email config:", {
+  apiKey: !!BREVO_API_KEY,
+  senderEmail: !!SENDER_EMAIL,
 });
 
-console.log("Email transporter config:", {
-  emailUser: !!process.env.EMAIL_USER,
-  emailPass: !!process.env.EMAIL_PASS,
-});
-
-transporter.verify((error: any, success: boolean) => {
-  if (error) {
-    console.error("Email transporter verification failed:", error);
-    const code = (error && (error as any).code) || (error && (error as any).errno);
-    if (code === "ENETUNREACH" || code === "EHOSTUNREACH") {
-      console.error(
-        "Network error when connecting to SMTP server (ENETUNREACH/EHOSTUNREACH). Host may block outbound SMTP. Consider using an API email provider or ensuring IPv4 access.",
-      );
-    }
-  } else {
-    console.log("Email transporter verified successfully.", success);
-  }
-});
-
-export const sendOTPEmail = async (email: string, otp: string) => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+const sendViaBrevoAPI = async (
+  toEmail: string,
+  toName: string,
+  subject: string,
+  html: string,
+): Promise<boolean> => {
+  if (!BREVO_API_KEY || !SENDER_EMAIL) {
     console.warn(
-      "EMAIL_USER or EMAIL_PASS is not set. Skipping OTP email delivery.",
-      { email, otp },
+      "BREVO_API_KEY or sender email is not set. Skipping email delivery.",
+      { toEmail },
     );
     return false;
   }
 
   try {
-    console.log("Sending OTP via SMTP to", email);
-    const info = await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Employee Management - Email Verification",
-      html: `<h2>Your OTP is ${otp}</h2>`,
-    });
-    console.log("sendMail finished");
-console.log(info);
+    const response = await axios.post(
+      BREVO_API_URL,
+      {
+        sender: { name: SENDER_NAME, email: SENDER_EMAIL },
+        to: [{ email: toEmail, name: toName }],
+        subject,
+        htmlContent: html,
+      },
+      {
+        headers: {
+          "api-key": BREVO_API_KEY,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
+    );
 
-    console.log("OTP Mail sent:", info.messageId, info.response);
+    console.log("Brevo email sent successfully:", response.data?.messageId);
     return true;
   } catch (err: any) {
-    console.error("SendMail Error (OTP):", {
+    console.error("Failed to send email via Brevo:", {
       message: err?.message,
-      code: err?.code,
-      response: err?.response,
-      stack: err?.stack,
+      status: err?.response?.status,
+      data: err?.response?.data,
     });
     return false;
   }
+};
+
+export const sendOTPEmail = async (email: string, otp: string) => {
+  console.log("Sending OTP via Brevo to", email);
+  const html = `<h2>Your OTP is ${otp}</h2>`;
+  return sendViaBrevoAPI(
+    email,
+    email,
+    "Employee Management - Email Verification",
+    html,
+  );
 };
 
 export const sendEmployeeCredentialsEmail = async (
@@ -69,18 +74,7 @@ export const sendEmployeeCredentialsEmail = async (
   tempPassword: string,
 ) => {
   console.log("========== sendEmployeeCredentialsEmail CALLED ==========");
-  console.log("Email:", email);
-console.log("Employee Name:", employeeName);
-console.log("Temp Password:", tempPassword);
-  console.log("Preparing to send employee credentials to:", email);
-
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.warn(
-      "EMAIL_USER or EMAIL_PASS not set. Skipping sending employee credentials.",
-      { email },
-    );
-    return false;
-  }
+  console.log("Target:", { email, employeeName, tempPassword });
 
   const subject = "Employee Account Created";
   const html = `
@@ -95,30 +89,8 @@ console.log("Temp Password:", tempPassword);
       </div>
     `;
 
-  try {
-    console.log("Sending employee credentials via SMTP to", email);
-    const info = await transporter.sendMail({
-      // from: `"Employee Management" <${process.env.EMAIL_USER}>`,
-      from: `"Employee Management" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject,
-      html,
-    });
-
-    console.log(
-      "Employee Credential Mail Sent Successfully",
-      info.messageId,
-      info.response,
-    );
-    return true;
-  } catch (err: any) {
-    console.error("Failed to send employee credentials email:", {
-      message: err?.message,
-      code: err?.code,
-      response: err?.response,
-      responseCode: err?.responseCode,
-      stack: err?.stack,
-    });
-    return false;
-  }
+  console.log("Sending employee credentials via Brevo to", email);
+  const sent = await sendViaBrevoAPI(email, employeeName, subject, html);
+  console.log("Employee credentials email sent:", sent);
+  return sent;
 };

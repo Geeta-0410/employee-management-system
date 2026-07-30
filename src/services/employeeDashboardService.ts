@@ -13,14 +13,14 @@ const getAuthHeaders = () => {
 };
 
 export const getSkills = async () => {
-  const response = await axios.get(`${API_URL}/skills`, getAuthHeaders());
+  const response = await axios.get(`${API_URL}/employees/skills`, getAuthHeaders());
 
   return response;
 };
 
 export const addSkill = async (skillData: { name: string; level: number }) => {
   const response = await axios.post(
-    `${API_URL}/skills`,
+    `${API_URL}/employees/skills`,
     skillData,
     getAuthHeaders(),
   );
@@ -36,7 +36,7 @@ export const updateSkill = async (
   },
 ) => {
   const response = await axios.put(
-    `${API_URL}/skills/${skillId}`,
+    `${API_URL}/employees/skills/${skillId}`,
     skillData,
     getAuthHeaders(),
   );
@@ -46,7 +46,7 @@ export const updateSkill = async (
 
 export const deleteSkill = async (skillId: string) => {
   const response = await axios.delete(
-    `${API_URL}/skills/${skillId}`,
+    `${API_URL}/employees/skills/${skillId}`,
     getAuthHeaders(),
   );
 

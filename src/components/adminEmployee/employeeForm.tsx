@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Employee } from "../types/employee";
-import { createEmployee, updateEmployee } from "../services/employeeService";
-import { employeeSchema } from "./validation/employeeScheema";
+import type { Employee } from "../../types/employee";
+import { createEmployee, updateEmployee } from "../../services/employeeService";
+import { employeeSchema } from "../validation/employeeScheema";
 
 interface EmployeeFormProps {
   employees: Employee[];

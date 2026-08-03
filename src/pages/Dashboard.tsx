@@ -1,10 +1,11 @@
 import { Navigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import Header from "../components/Header";
-import EmployeeForm from "../components/employeeForm";
-import UserDashboard from "../components/userDashboard";
+import DashboardPage from "../adminPages/DashboardPage";
+import EmployeePage from "../adminPages/EmployeePage";
 import { logoutUser } from "../services/authServices";
 import useEmployees from "../hooks/useEmployee";
+import { useState } from "react";
 
 export default function Dashboard() {
   const token = localStorage.getItem("token");
@@ -54,6 +55,11 @@ export default function Dashboard() {
     totalPages,
     totalRecords,
   } = useEmployees();
+  // Workaround for potential typing mismatch of imported component
+  const EmployeePageComponent: any = EmployeePage;
+  const [activeTab, setActiveTab] = useState<
+  "dashboard" | "employees"
+>("dashboard");
   return (
     <>
       <Toaster position="top-center" />
@@ -66,36 +72,55 @@ export default function Dashboard() {
 
         <Header onLogout={handleLogout} />
         <main className="max-w-[1600px] mx-auto px-8 py-8">
-          <div className=" flex flex-col gap-5">
-            <div className="h-full">
-              <EmployeeForm
-                employees={employees}
-                setEmployees={setEmployees}
-                fetchEmployees={fetchEmployees}
-                editingEmployee={editingEmployee}
-                setEditingEmployee={setEditingEmployee}
-              />
-            </div>
-            <div className="lg:col-span-2">
-              <UserDashboard
-                employees={employees}
-                setEditingEmployee={setEditingEmployee}
-                fetchEmployees={fetchEmployees}
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-                selectedCompany={selectedCompany}
-                setSelectedCompany={setSelectedCompany}
-                selectedDomain={selectedDomain}
-                setSelectedDomain={setSelectedDomain}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                pageSize={pageSize}
-                setPageSize={setPageSize}
-                totalPages={totalPages}
-                totalRecords={totalRecords}
-              />
-            </div>
-          </div>
+     <div className="mb-6 flex gap-4">
+
+  <button
+    onClick={() => setActiveTab("dashboard")}
+    className={`px-5 py-2 rounded-xl ${
+      activeTab === "dashboard"
+        ? "bg-indigo-600 text-white"
+        : "bg-white"
+    }`}
+  >
+    Dashboard
+  </button>
+
+  <button
+    onClick={() => setActiveTab("employees")}
+    className={`px-5 py-2 rounded-xl ${
+      activeTab === "employees"
+        ? "bg-indigo-600 text-white"
+        : "bg-white"
+    }`}
+  >
+    Employees
+  </button>
+
+</div>
+
+{activeTab === "dashboard" ? (
+  <DashboardPage employees={employees} />
+) : (
+  <EmployeePageComponent
+    employees={employees}
+    setEmployees={setEmployees}
+    editingEmployee={editingEmployee}
+    setEditingEmployee={setEditingEmployee}
+    fetchEmployees={fetchEmployees}
+    searchTerm={searchTerm}
+    setSearchTerm={setSearchTerm}
+    selectedCompany={selectedCompany}
+    setSelectedCompany={setSelectedCompany}
+    selectedDomain={selectedDomain}
+    setSelectedDomain={setSelectedDomain}
+    currentPage={currentPage}
+    setCurrentPage={setCurrentPage}
+    pageSize={pageSize}
+    setPageSize={setPageSize}
+    totalPages={totalPages}
+    totalRecords={totalRecords}
+  />
+)}
         </main>
       </div>
     </>

@@ -22,7 +22,7 @@ export default function Dashboard() {
       localStorage.removeItem("token");
 
       setTimeout(() => {
-        window.location.href = "/login";
+        window.location.href = "/";
       }, 1000);
     }  catch (err: any) {
   console.log("Logout Error:", err);

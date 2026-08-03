@@ -33,6 +33,7 @@ export default function CompanyBarChart({
     <div className="bg-white rounded-3xl p-6 border shadow-sm">
       <h2 className="text-lg font-semibold mb-4">
         Company Ranking
+        
       </h2>
 
       <div className="h-80">

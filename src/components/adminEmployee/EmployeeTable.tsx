@@ -16,10 +16,6 @@ interface UserDashboardProps {
     React.SetStateAction<Employee | null>
   >;
 
-
-  setOpenDrawer: React.Dispatch<
-  React.SetStateAction<boolean>
->;
   fetchEmployees: () => Promise<void>;
 
   searchTerm: string;
@@ -54,7 +50,6 @@ interface UserDashboardProps {
 function EmployeeTable({
   employees,
   setEditingEmployee,
-  setOpenDrawer,
   fetchEmployees,
   searchTerm,
   setSearchTerm,
@@ -72,6 +67,8 @@ function EmployeeTable({
   const [companies, setCompanies] = useState<string[]>([]);
   const [domains, setDomains] = useState<string[]>([]);
   const [domain, setDomain] = useState<string[]>([]);
+  const [companyCount, setCompanyCount] =
+  useState<Record<string, number>>({});
 
 const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -79,7 +76,13 @@ const [employeeToDelete, setEmployeeToDelete] =
   useState<number | null>(null);
   const handleEdit = (employee: Employee) => {
   setEditingEmployee(employee);
-  setOpenDrawer(true);
+
+  document
+    .getElementById("employee-form")
+    ?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
 };
 
 const handleDelete = (employeeId: number) => {
@@ -136,6 +139,18 @@ useEffect(() => {
       (key) => map[key] === max
     )
   );
+}, [employees]);
+
+useEffect(() => {
+  const map: Record<string, number> = {};
+
+  employees.forEach((emp) => {
+    const company = emp.company || "N/A";
+
+    map[company] = (map[company] || 0) + 1;
+  });
+
+  setCompanyCount(map);
 }, [employees]);
        
 
@@ -357,7 +372,66 @@ useEffect(() => {
     </button>
   </div>
 </div>
-      
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 mb-8">
+
+  {/* Most Common Domain */}
+  <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+    <h2 className="text-lg font-semibold text-slate-800 mb-3">
+      Most Common Domain
+    </h2>
+
+    <div className="flex flex-wrap gap-2">
+      {domain.length > 0 ? (
+        domain.map((d) => (
+          <span
+            key={d}
+            className="px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 text-sm font-semibold"
+          >
+            {d}
+          </span>
+        ))
+      ) : (
+        <span className="text-slate-400">
+          N/A
+        </span>
+      )}
+    </div>
+  </div>
+
+  {/* Users Per Company */}
+  <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+    <h2 className="text-lg font-semibold text-slate-800 mb-4">
+      Users Per Company
+    </h2>
+
+    <div className="space-y-2 max-h-40 overflow-y-auto">
+      {Object.keys(companyCount).length > 0 ? (
+        Object.keys(companyCount)
+          .sort()
+          .map((company) => (
+            <div
+              key={company}
+              className="flex justify-between items-center bg-slate-50 rounded-xl px-4 py-3"
+            >
+              <span className="font-medium text-slate-700">
+                {company}
+              </span>
+
+              <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-semibold">
+                {companyCount[company]}
+              </span>
+            </div>
+          ))
+      ) : (
+        <span className="text-slate-400">
+          No Data
+        </span>
+      )}
+    </div>
+  </div>
+
+</div>
+
     {showDeleteModal && (
       <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 px-4">
         <div className="bg-white rounded-3xl w-full max-w-md p-8 shadow-2xl border border-slate-200">

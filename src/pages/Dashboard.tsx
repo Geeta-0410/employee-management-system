@@ -24,11 +24,16 @@ export default function Dashboard() {
       setTimeout(() => {
         window.location.href = "/login";
       }, 1000);
-    } catch (err: any) {
-      console.error(err);
+    }  catch (err: any) {
+  console.log("Logout Error:", err);
+  console.log("Response:", err.response);
+  console.log("Status:", err.response?.status);
+  console.log("Data:", err.response?.data);
 
-      toast.error(err.response?.data?.message || "Logout Failed");
-    }
+  toast.error(
+    err.response?.data?.message || "Logout Failed"
+  );
+}
   };
   const {
     employees,
@@ -72,29 +77,44 @@ export default function Dashboard() {
 
         <Header onLogout={handleLogout} />
         <main className="max-w-[1600px] mx-auto px-8 py-8">
-     <div className="mb-6 flex gap-4">
+   <div className="mb-6 flex items-center justify-between">
 
-  <button
-    onClick={() => setActiveTab("dashboard")}
-    className={`px-5 py-2 rounded-xl ${
-      activeTab === "dashboard"
-        ? "bg-indigo-600 text-white"
-        : "bg-white"
-    }`}
-  >
-    Dashboard
-  </button>
+  <div className="flex gap-4">
+    <button
+      onClick={() => setActiveTab("dashboard")}
+      className={`px-5 py-2 rounded-xl ${
+        activeTab === "dashboard"
+          ? "bg-indigo-600 text-white"
+          : "bg-white"
+      }`}
+    >
+      Dashboard
+    </button>
 
-  <button
-    onClick={() => setActiveTab("employees")}
-    className={`px-5 py-2 rounded-xl ${
-      activeTab === "employees"
-        ? "bg-indigo-600 text-white"
-        : "bg-white"
-    }`}
-  >
-    Employees
-  </button>
+    <button
+      onClick={() => setActiveTab("employees")}
+      className={`px-5 py-2 rounded-xl ${
+        activeTab === "employees"
+          ? "bg-indigo-600 text-white"
+          : "bg-white"
+      }`}
+    >
+      Employees
+    </button>
+  </div>
+
+  {activeTab === "employees" && (
+    <button
+      onClick={() =>
+        document.getElementById("employee-form")?.scrollIntoView({
+          behavior: "smooth",
+        })
+      }
+      className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-xl font-medium"
+    >
+      + Add Employee
+    </button>
+  )}
 
 </div>
 

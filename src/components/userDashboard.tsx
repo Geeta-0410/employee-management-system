@@ -392,11 +392,11 @@ toast.success("Employee deleted successfully");
 
 <div className="flex items-center justify-between mt-6 px-4">
 
-  <div>
+  {/* <div>
     <p className="text-sm text-gray-600">
       Total Employees: {totalRecords}
     </p>
-  </div>
+  </div> */}
 
   <div className="flex items-center gap-3">
 

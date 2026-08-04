@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Send } from "lucide-react";
 import { sendChatMessage } from "../services/aiService";
-
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 interface Message {
   role: "user" | "assistant";
   content: string;
@@ -12,6 +13,8 @@ export default function AIAssistant() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -42,10 +45,45 @@ export default function AIAssistant() {
 
   return (
     <div className="flex flex-col h-screen bg-white">
-      <header className="bg-slate-600 shadow px-6 py-4">
-        <h1 className="text-2xl font-bold text-white">AI Assistant</h1>
-      </header>
+     <div
+  className="
+    fixed
+    top-9
+    left-0
+    right-0
+    z-30
+    bg-slate-700
+    px-8
+    py-6
+    shadow-lg
+  "
+>
+  <div className="flex items-center gap-4">
+    <button
+      onClick={() => navigate(-1)}
+      className="
+        bg-white
+        p-2
+        rounded-full
+        text-slate-800
+        hover:bg-slate-200
+        transition
+      "
+    >
+      <FaArrowLeft />
+    </button>
 
+    <div>
+      <h1 className="text-3xl font-bold text-white">
+        AI Assistant
+      </h1>
+
+      <p className="text-slate-300 mt-1">
+        Ask questions, get insights, and receive intelligent assistance.
+      </p>
+    </div>
+  </div>
+</div>
       <div className="flex flex-col flex-1 w-full max-w-3xl mx-auto">
         {/* Scrollable Chat Area */}
         <div className="flex-1 overflow-y-auto p-6 space-y-3">

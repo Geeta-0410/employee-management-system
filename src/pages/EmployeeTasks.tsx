@@ -146,44 +146,66 @@ function EmployeeTasks() {
   const totalPages = Math.ceil(filteredTasks.length / tasksPerPage);
   return (
     <div className="min-h-screen bg-slate-200 ">
-      <div className="flex items-center gap-4 bg-slate-700 px-8 py-8 rounded-b-2xl shadow-lg mb-8">
-        <button
-          onClick={() => navigate(-1)}
-          className="
-      p-1
-      rounded-full
-      bg-white
-      shadow
-      hover:bg-slate-100
-      transition
-    "
-        >
-          <FaArrowLeft />
-        </button>
+   <div
+  className="
+    fixed
+    top-10
+    left-0
+    right-0
+    z-30
+    bg-slate-700
+    px-8
+    py-6
+    shadow-lg
+  "
+>
+  <div className="flex items-center justify-between">
+    <div className="flex items-center gap-4">
+      <button
+        onClick={() => navigate(-1)}
+        className="
+          p-2
+          rounded-full
+          bg-white
+          shadow
+          hover:bg-slate-100
+          transition
+        "
+      >
+        <FaArrowLeft />
+      </button>
 
-        <h1 className="text-3xl font-bold text-white">My Tasks</h1>
+      <div>
+        <h1 className="text-3xl font-bold text-white">
+          My Tasks
+        </h1>
 
-        <div className="ml-auto">
-          <input
-            type="text"
-            placeholder="Search Task..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="
-      px-4 py-2
-      rounded-xl
-      border
-      bg-white
-      w-72
-      outline-none
-    "
-          />
-        </div>
+        <p className="text-slate-300 mt-1">
+          Manage and track your assigned tasks.
+        </p>
       </div>
+    </div>
+
+    <input
+      type="text"
+      placeholder="Search Task..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="
+        px-4 py-2
+        rounded-xl
+        border
+        bg-white
+        w-72
+        outline-none
+      "
+    />
+  </div>
+</div>
 
       {/* Add Task Form */}
 
-      <div className="bg-white rounded-2xl shadow p-6 mb-8">
+      <div className="bg-slate-200 rounded-2xl shadow p-6 mb-8">
         <h2 className="text-xl font-semibold mb-5">Add Task</h2>
 
         <div className="grid md:grid-cols-4 gap-4">

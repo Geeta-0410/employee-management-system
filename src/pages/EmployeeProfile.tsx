@@ -71,10 +71,24 @@ function EmployeeProfile() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className=" bg-slate-100">
       {/* Header */}
 
-      <div className="bg-slate-700 px-8 py-6 rounded-b-2xl shadow-lg">
+      <div
+  className="
+    fixed
+    top-16
+    left-0
+    right-0
+    z-40
+    bg-slate-700
+    px-8
+    py-6
+    shadow-lg
+  "
+>
+
+
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button

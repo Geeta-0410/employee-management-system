@@ -1,4 +1,5 @@
 import AttendanceButton from "./AttendanceButton";
+
 interface Props {
   employee: any;
   onAttendanceMarked: () => void;
@@ -9,41 +10,53 @@ function WelcomeCard({
   onAttendanceMarked,
 }: Props) {
   return (
-<div className="bg-slate-700 text-white rounded-3xl p-4 shadow-lg mt-0">
+   <div
+  className="
+    fixed
+    top-16
+    left-0
+    right-0
+    z-30
+    bg-slate-700
+    text-white
+    p-4
+    shadow-lg
+  "
+>
+      <div className="flex flex-col lg:flex-row justify-between gap-6">
+        
+        {/* Left Section */}
+        <div className="flex-1">
+          <h2 className="text-3xl font-bold">
+            Welcome Back, {employee?.name}
+          </h2>
 
-  <div className="flex justify-between items-start">
+          <p className="text-white/80 mt-2">
+            Have a productive day ahead.
+          </p>
 
-    <div>
-      <h2 className="text-3xl font-bold">
-        Welcome Back, {employee?.name}
-      </h2>
+          <div className="mt-6">
+            <div className="bg-white/10 rounded-2xl p-4 w-fit min-w-[220px]">
+              <h3 className="text-sm font-semibold">
+                Employee ID
+              </h3>
 
-      <p className="text-white/90 mt-1">
-        Have a productive day ahead.
-      </p>
+              <p className="text-2xl font-bold mt-1">
+                {employee?.employeeId}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="flex justify-end">
+          <AttendanceButton
+            onAttendanceMarked={onAttendanceMarked}
+          />
+        </div>
+
+      </div>
     </div>
-
-    <div>
-      <AttendanceButton
-        onAttendanceMarked={onAttendanceMarked}
-      />
-    </div>
-
-  </div>
-
-  <div className="mt-6">
-    <div className="bg-white/10 rounded-2xl p-4 w-[260px]">
-      <h3 className="text-sm font-semibold">
-        Employee ID
-      </h3>
-
-      <p className="text-xl font-bold">
-        {employee?.employeeId}
-      </p>
-    </div>
-  </div>
-
-</div>
   );
 }
 

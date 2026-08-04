@@ -21,7 +21,7 @@ const GoogleButton: React.FC<GoogleButtonProps> = ({
         marginTop: "16px",
         border: "1px solid #d1d5db",
         borderRadius: "8px",
-        background: "#2f56da",
+        background: "#4f46e5",
         cursor: "pointer",
         fontSize: "16px",
         fontWeight: 500,

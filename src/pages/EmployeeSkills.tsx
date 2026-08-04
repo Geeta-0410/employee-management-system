@@ -112,8 +112,21 @@ function EmployeeSkills() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100">
-      <div className="bg-slate-700 px-8 py-8 rounded-b-2xl shadow-lg">
+    <div className="min-h-screen bg-slate-200">
+      <div
+        className="
+    fixed
+    top-5
+    left-0
+    right-0
+    z-30
+    bg-slate-700
+    px-8
+    py-6
+    shadow-lg
+  "
+      >
+        ``
         <div className="ml-3 flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
@@ -142,7 +155,7 @@ function EmployeeSkills() {
       <div className="p-6">
         {/* Form */}
 
-        <div className="bg-slate-200 rounded-3xl shadow p-6 mt-4 mb-4">
+        <div className="bg-white rounded-3xl shadow p-6 mt-4 mb-4">
           <h2 className="text-xl font-semibold mb-4">
             {editingId ? "Update Skill" : "Add New Skill"}
           </h2>
@@ -189,7 +202,7 @@ function EmployeeSkills() {
         </div>
       </div>
 
-      <div className="bg-slate-200 rounded-3xl shadow p-6 m-8">
+      <div className="bg-white rounded-3xl shadow p-6 m-8">
         <h2 className="text-xl font-semibold mb-4">Skills List</h2>
 
         <div className="overflow-x-auto ">

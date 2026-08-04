@@ -17,7 +17,7 @@ function EmployeeStats({ employee }: Props) {
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
       {/* Experience */}
 
-      <div className="bg-blue-50 border border-blue-100 rounded-3xl shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+      <div className="bg-white border border-blue-100 rounded-3xl shadow-sm p-6 hover:shadow-lg transition-all duration-300">
         <div className="flex justify-between items-center">
           <div>
             <p className="text-slate-500 text-sm">Experience</p>
@@ -35,7 +35,7 @@ function EmployeeStats({ employee }: Props) {
 
       {/* Skills */}
 
-      <div className="bg-blue-50 border border-blue-100 rounded-3xl shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+      <div className="bg-white border border-blue-100 rounded-3xl shadow-sm p-6 hover:shadow-lg transition-all duration-300">
         <div className="flex justify-between ">
           <div>
             <p className="text-slate-500 text-sm">Skills</p>
@@ -68,7 +68,7 @@ function EmployeeStats({ employee }: Props) {
 
       {/* Department */}
 
-      <div className="bg-blue-50 border border-blue-100 rounded-3xl shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+      <div className="bg-white border border-blue-100 rounded-3xl shadow-sm p-6 hover:shadow-lg transition-all duration-300">
         <div className="flex justify-between items-center">
           <div>
             <p className="text-slate-500 text-sm">Department</p>
@@ -84,7 +84,7 @@ function EmployeeStats({ employee }: Props) {
 
       {/* Company */}
 
-      <div className="bg-blue-50 border border-blue-100 rounded-3xl shadow-sm p-6 hover:shadow-lg transition-all duration-300">
+      <div className="bg-white border border-blue-100 rounded-3xl shadow-sm p-6 hover:shadow-lg transition-all duration-300">
         <div className="flex justify-between items-center">
           <div>
             <p className="text-slate-500 text-sm">Company</p>

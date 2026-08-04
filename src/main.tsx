@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import EmployeeLayout from "./components/employee/EmployeeLayout";
 import "./index.css";
 import "leaflet/dist/leaflet.css";
 
@@ -39,7 +39,7 @@ createRoot(document.getElementById("root")!).render(
 
         <Route path="/change-password" element={<ChangePassword />} />
 
-        <Route
+        {/* <Route
           path="/employee-dashboard"
           element={
             <ProtectedEmployeeRoute>
@@ -87,7 +87,45 @@ createRoot(document.getElementById("root")!).render(
               <EmployeeProfile />
             </ProtectedEmployeeRoute>
           }
-        />
+        /> */}
+        <Route
+  path="/employee"
+  element={
+    <ProtectedEmployeeRoute>
+      <EmployeeLayout />
+    </ProtectedEmployeeRoute>
+  }
+>
+  <Route
+    index
+    element={<EmployeeDashboard />}
+  />
+
+  <Route
+    path="profile"
+    element={<EmployeeProfile />}
+  />
+
+  <Route
+    path="attendance"
+    element={<Attendance />}
+  />
+
+  <Route
+    path="skills"
+    element={<EmployeeSkills />}
+  />
+
+  <Route
+    path="tasks"
+    element={<EmployeeTasks />}
+  />
+
+  <Route
+    path="chat"
+    element={<AIAssistant />}
+  />
+</Route>
       </Routes>
     </BrowserRouter>
   </StrictMode>,

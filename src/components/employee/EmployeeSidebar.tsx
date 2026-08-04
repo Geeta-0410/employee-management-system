@@ -50,7 +50,7 @@ function EmployeeSidebar({ open, setOpen }: Props) {
       >
         <div className="p-6">
           <div className="flex justify-between items-center mb-10">
-            <div className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3">
               <button
                 onClick={() => setOpen(!open)}
                 className=" p-2 rounded-lg hover:bg-slate-60 transition"
@@ -58,15 +58,18 @@ function EmployeeSidebar({ open, setOpen }: Props) {
                 {open ? <FaTimes size={20} /> : <FaBars size={20} />}
               </button>
 
-              <h2 className="text-2xl font-bold">Employee</h2>
-            </div>
+              <h2 className="text-2xl font-bold"></h2>
+            </div> */}
           </div>
 
           <ul className="space-y-3">
-            <li className="flex items-center gap-3 hover:bg-slate-800 rounded-xl px-4 py-3 cursor-pointer">
-              <FaHome />
-              Dashboard
-            </li>
+           <Link
+  to="/employee"
+  className="flex items-center gap-3 hover:bg-slate-800 rounded-xl px-4 py-3 transition"
+>
+  <FaHome />
+  Dashboard
+</Link>
 
             <Link
               to="/employee/profile"
@@ -116,14 +119,6 @@ function EmployeeSidebar({ open, setOpen }: Props) {
               AI Chatbot
             </Link>
 
-            {/* 
-          <li className="flex items-center gap-3 hover:bg-slate-800 rounded-xl px-4 py-3 transition cursor-pointer">
-
-            <FaCog />
-
-            Settings
-
-          </li> */}
             <li
               onClick={() => setShowLogoutModal(true)}
               className="flex items-center gap-3 mt-10 text-red-400 hover:bg-red-500/20 rounded-xl px-4 py-3 transition cursor-pointer"

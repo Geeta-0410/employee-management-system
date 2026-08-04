@@ -20,7 +20,7 @@ interface Props {
 
 function SkillsBarChart({ skills }: Props) {
   return (
-    <div className="bg-slate-200 rounded-3xl shadow-lg p-6 h-[420px] m-8">
+    <div className="bg-white rounded-3xl shadow-lg p-6 h-[420px] m-8">
       <h2 className="text-xl font-semibold text-slate-800 mb-6">
         Skills Distribution
       </h2>

@@ -16,9 +16,21 @@ function Attendance() {
 
   return (
     <div className="min-h-screen  bg-slate-100">
-      {/* Header */}
-      <div className="bg-slate-700 px-8 py-8 rounded-b-2xl shadow-lg">
-        <div className="ml-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      {/* Header */}     
+         <div
+  className="
+    fixed
+    top-0
+    left-0
+    right-0
+    z-30
+    bg-slate-700
+    px-8
+    py-8
+    rounded-b-3xl shadow-lg
+  "
+> 
+       <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate(-1)}
@@ -35,7 +47,7 @@ function Attendance() {
             </button>
 
             <div>
-              <h1 className="text-3xl font-bold text-white">
+              <h1 className="text-2xl font-semibold text-white pt-2">
                 Attendance Management
               </h1>
 
@@ -52,7 +64,7 @@ function Attendance() {
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      <div className="p-6 pt-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Attendance Details */}
 

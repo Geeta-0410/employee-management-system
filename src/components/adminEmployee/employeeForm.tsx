@@ -113,7 +113,7 @@ function EmployeeForm({
     <div className="w-full">
       <div className="bg-white rounded-[28px] border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 p-8 " >
         <div className="mb-8 text-left ">
-          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">{editingEmployee ? "Edit Employee" : "Add New Employee"}</h2>
+          <h2 className="text-xl font-bold text-slate-900 tracking-tight">{editingEmployee ? "Edit Employee" : "Add New Employee"}</h2>
           <p className="text-slate-500 text-base mt-2">Fill in the details to register a new employee</p>
         </div>
 

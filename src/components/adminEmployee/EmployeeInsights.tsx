@@ -11,7 +11,7 @@ export default function EmployeeInsights({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 mb-8">
       {/* Most Common Domain */}
       <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-lg transition-all duration-300">
-        <h2 className="text-lg font-semibold text-slate-800 mb-2">
+        <h2 className="text-xl font-bold text-slate-800 mb-2">
           Most Common Domain
         </h2>
 
@@ -34,8 +34,8 @@ export default function EmployeeInsights({
       </div>
 
       {/* Users Per Company */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-lg transition-all duration-300">
-        <h2 className="text-lg font-semibold text-slate-800 mb-4">
+      <div className="bg-white rounded-3xl border border-slate p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+        <h2 className="text-xl font-semibold text-slate-800 mb-4">
           Users Per Company
         </h2>
 
